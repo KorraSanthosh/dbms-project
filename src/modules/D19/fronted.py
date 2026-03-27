@@ -5,10 +5,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 API_URL=os.getenv(API_URL)
-# ──────────────────────────────────────────────────────────────────────
-# PAGE CONFIG
-# ──────────────────────────────────────────────────────────────────────
-
 st.set_page_config(
     page_title="DrugDrug Interaction System",
     page_icon="💊",
