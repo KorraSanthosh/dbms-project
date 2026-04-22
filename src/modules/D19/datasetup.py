@@ -1,16 +1,22 @@
+import os
 from pymongo import MongoClient
 from itertools import combinations
 from datetime import datetime
-import random
-import os
 from dotenv import load_dotenv
+import random
+
+# Load environment variables from .env
 load_dotenv()
-MONGO_URI=os.getenv("MONGO_URI")
+
 # -----------------------------------
 # MongoDB Connection
 # -----------------------------------
 
-client = MongoClient(MONGO_URI)
+uri = os.environ.get("MONGODB_URI")
+if not uri:
+    raise ValueError("❌ MONGODB_URI not found. Make sure your .env file exists and has MONGODB_URI set.")
+
+client = MongoClient(uri)
 
 db = client["drug_interaction_system"]
 
@@ -140,4 +146,4 @@ interactions.create_index([("drug1", 1), ("drug2", 1)])
 
 print("Index created")
 
-print(" Database setup complete")
+print("✅ Database setup complete")
