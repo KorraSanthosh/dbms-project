@@ -1,11 +1,13 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from datetime import datetime
-import os
 from dotenv import load_dotenv
+
+# Load environment variables from .env
 load_dotenv()
-MONGO_URI=os.getenv("MONGO_URI")
+
 app = FastAPI()
 
 app.add_middleware(
@@ -16,7 +18,11 @@ app.add_middleware(
 )
 
 # MongoDB Atlas connection
-client = MongoClient(MONGO_URI)
+uri = os.environ.get("MONGODB_URI")
+if not uri:
+    raise ValueError("❌ MONGODB_URI not found. Make sure your .env file exists and has MONGODB_URI set.")
+
+client = MongoClient(uri)
 
 db = client["drug_interaction_system"]
 
